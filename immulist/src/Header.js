@@ -12,9 +12,9 @@ class Header extends React.Component{
                 </div>
                 <div className="nav">
                     <ul>
-                        <li><a href="/dashboard" class="page-links">Dashboard</a></li>
-                        <li><a href="/account" class="page-links">Account</a></li>
                         <li><a href="/" class="page-links">Home</a></li>
+                        <li><a href="/dashboard" class="page-links">Dashboard</a></li>
+                        <li><a href="/account" class="page-links">Account</a></li> 
                     </ul>
                 </div>
             </header>
