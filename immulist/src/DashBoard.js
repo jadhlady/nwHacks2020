@@ -2,26 +2,8 @@
 import React from "react";
 import './DashBoard.css';
 import axios from 'axios';
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
 
 const GETURL = "https://ckoo.api.stdlib.com/nwhacks2020@dev/immulist/get_all_records/?db";
-const styles = {
-    button: {
-        // padding: "10px",
-        margin: "10px",
-        position: "absolute",
-        right: 0
-    },
-    input: {
-        display: 'none',
-    },
-    card: {
-        margin: "20px",
-        width: "70%",
-        textAlign: "centre",
-    }
-};
 
 class DashBoard extends React.Component{
     state = {
@@ -88,19 +70,8 @@ class DashBoard extends React.Component{
     render(){
         return (
             <div className="body">
-                {localStorage.getItem("usertype") === "clinic"
-                    ?
-                    <Button variant="contained" size="large" color="secondary" style={styles.button} onClick={() => {
-                        this.userTypeHandler("client")
-                    }}>
-                        Add a Record
-                    </Button>
-                    :
-                    <div></div>
-                }
-
                 <div className="records">
-                <h1>Records</h1>
+                <h1>Your Records</h1>
                     <table id="records">
                         <tbody>
                             <tr>

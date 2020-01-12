@@ -8,15 +8,20 @@ import { Redirect } from 'react-router-dom'
 const styles = {
     button: {
         // padding: "10px",
-        margin: "10px"
+        margin: "15px",
+        color: "white",
+        backgroundColor: "rgb(165,200,210)"
     },
     input: {
         display: 'none',
     },
     card: {
-        margin: "20px",
+        margin: "120px",
+        position: "centre",
         width: "70%",
         textAlign: "centre",
+        padding: "30px",
+
     }
 };
 
@@ -35,7 +40,7 @@ class SignIn extends React.Component{
 
     renderRedirect = () => {
         localStorage.setItem('usertype',
-            this.state.userType);
+            JSON.stringify(this.state.userType));
         return <Redirect to='/dashboard'/>
     }
 
