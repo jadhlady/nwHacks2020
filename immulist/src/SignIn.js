@@ -40,7 +40,7 @@ class SignIn extends React.Component{
 
     renderRedirect = () => {
         localStorage.setItem('usertype',
-            JSON.stringify(this.state.userType));
+            this.state.userType);
         return <Redirect to='/dashboard'/>
     }
 
