@@ -34,11 +34,9 @@ class SignIn extends React.Component{
     }
 
     renderRedirect = () => {
-        this.context.router.push({
-            pathname: '/confirmation',
-            state: {email: this.state.email}
-        })
-        return <Redirect to='/'/>
+        localStorage.setItem('usertype',
+            JSON.stringify(this.state.userType));
+        return <Redirect to='/dashboard'/>
     }
 
     render(){
