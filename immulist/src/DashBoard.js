@@ -1,118 +1,67 @@
 
 import React from "react";
 import './DashBoard.css';
+import axios from 'axios';
+
+const GETURL = "https://ckoo.api.stdlib.com/nwhacks2020@dev/immulist/get_all_records/?db";
 
 class DashBoard extends React.Component{
     state = {
         recordsData: undefined,
         vaccinesData: undefined,
+        records: []
     }
     renderVaccines = () => {
 
     }
+
+    addIDInfo = async (data) => {
+        let clients = await axios.get(`${GETURL}=clients`)
+        clients = clients.data.result
+        console.log(clients)
+
+        let clinics = await axios.get(`${GETURL}=clinics`)
+        clinics = clinics.data.result
+
+        let vaccines = await axios.get(`${GETURL}=vaccines`)
+        vaccines = vaccines.data.result
+
+        for (let d of data) {
+            d["clinic_name"] = clinics.filter(c => c["_id"] === d["clinic_id"])[0]["name"]
+            d["client_name"] = clients.filter(c => c["_id"] === d["user_id"])[0]["name"]
+            d["vaccine_name"] = vaccines.filter(c => c["_id"] === d["immu_id"])[0]["name"]
+            d["date"] = new Date(d["date"]).toDateString()
+        }
+
+        return data
+    }
+
+    getDataTableAsArray = async (tableName) => {
+        const response = await axios.get(`${GETURL}=${tableName}`);
+        console.log(response.data);
+        let res = await this.addIDInfo(response.data.result)
+        return res
+    }
+
+    getData = async () => {
+        let records = await this.getDataTableAsArray("records");
+        this.setState({records: records});
+
+    }
+
+    componentDidMount() {
+        this.getData()
+    }
+
     renderRecords = () => {
-        let data = {
-            "result": [
-                {
-                "_id": 1,
-                "name": "Tetanus, diphtheria (reduced toxoid), acellular pertussis (reduced toxoid) vaccine"
-                },
-                {
-                "_id": 2,
-                "name": "Tetanus and diphtheria (reduced toxoid) vaccine"
-                },
-                {
-                "_id": 3,
-                "name": "Influenza vaccine"
-                },
-                {
-                "_id": 4,
-                "name": "Pneumococcal polysaccharide (23-valent) vaccine"
-                },
-                {
-                "_id": 5,
-                "name": "Herpes Zoster (Shingles) vaccine"
-                },
-                {
-                "_id": 6,
-                "name": "Diphtheria, Tetanus, acellular Pertussis, Inactivated Polio Virus, Haemophilus Influenzae type B vaccine"
-                },
-                {
-                "_id": 7,
-                "name": "Diphtheria, Tetanus, acellular Pertussis, Hepatitis B, Inactivated Polio Virus, Haemophilus Influenzae type B vaccine"
-                },
-                {
-                "_id": 8,
-                "name": "Tetanus, diphtheria (reduced toxoid), acellular pertussis (reduced toxoid), Inactivated Polio Virus vaccine"
-                },
-                {
-                "_id": 9,
-                "name": "Tetanus, diphtheria (reduced toxoid), acellular pertussis (reduced toxoid) vaccine"
-                },
-                {
-                "_id": 10,
-                "name": "Tetanus, diphtheria (reduced toxoid)"
-                },
-                {
-                "_id": 11,
-                "name": "Bacille Calmette-Guérin (BCG) Vaccine"
-                },
-                {
-                "_id": 12,
-                "name": "Hepatitis A Vaccine, Hepatitis B vaccine"
-                },
-                {
-                "_id": 13,
-                "name": "Hepatitis B vaccine"
-                },
-                {
-                "_id": 14,
-                "name": "Measles, Mumps, Rubella vaccine"
-                },
-                {
-                "_id": 15,
-                "name": "Varicella vaccine"
-                },
-                {
-                "_id": 16,
-                "name": "Measles, Mumps, Rubella, Varicella vaccine"
-                },
-                {
-                "_id": 17,
-                "name": "Meningococcal conjugate (Strain C) vaccine"
-                },
-                {
-                "_id": 18,
-                "name": "Meningococcal conjugate (Strains A, C, Y, W135) vaccine"
-                },
-                {
-                "_id": 19,
-                "name": "Pneumococcal polysaccharide (23-valent) vaccine"
-                },
-                {
-                "_id": 20,
-                "name": "ears conjugate (13-valent) vaccine"
-                },
-                {
-                "_id": 21,
-                "name": "Pneumococcal conjugate (10-valent) vaccine"
-                },
-                {
-                "_id": 22,
-                "name": "Rotavirus vaccine"
-                },
-                {
-                "_id": 23,
-                "name": "Human Papillomavirus vaccine"
-                }
-                ]
-            }
-            return data.result.map((va) => {
-                const { _id, name} = va //destructuring
+            return this.state.records.map((va) => {
+                const { _id, clinic_name, client_name, vaccine_name, date} = va //destructuring
                 return (
                    <tr key={_id}>
-                      <td>{_id}</td>
-                      <td>{name}</td>
+                      <td>{clinic_name}</td>
+                       <td>{client_name}</td>
+                       <td>{vaccine_name}</td>
+                       <td>{date}</td>
                    </tr>
                 )
              })
@@ -125,6 +74,12 @@ class DashBoard extends React.Component{
                 <h1>records</h1>
                     <table id="records">
                         <tbody>
+                            <tr>
+                                <th>Clinic Name</th>
+                                <th>Client Name</th>
+                                <th>Vaccine Name</th>
+                                <th>Date Immunized</th>
+                            </tr>
                             {this.renderRecords()}
                         </tbody>
                     </table>
