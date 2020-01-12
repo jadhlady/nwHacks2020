@@ -10,8 +10,8 @@ class App extends React.Component{
     render(){
         return (
             <BrowserRouter>
+            <Header/>
             <div className="ImmuApp">
-                <Header/>
                 <Switch>
                 <Route path="/" component={SplashScreen} exact/>
                 <Route path="/dashboard" component={DashBoard} exact/>
