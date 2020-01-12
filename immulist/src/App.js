@@ -14,7 +14,7 @@ class App extends React.Component{
             <Header/>
             <div className="ImmuApp">
                 <Switch>
-                <Route path="/" component={SplashScreen} exact/>
+                <Route path="/" component={SignIn} exact/>
                 <Route path="/dashboard" component={DashBoard} exact/>
                 <Route path="/signin" component={SignIn} exact/>
                 </Switch>
