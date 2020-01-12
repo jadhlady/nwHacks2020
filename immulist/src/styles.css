@@ -10,3 +10,9 @@ body {
   text-align: center;
   color: #000000
 }
+
+#root {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
