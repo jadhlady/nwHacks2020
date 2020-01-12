@@ -5,6 +5,7 @@ import "./styles.css";
 import SplashScreen from './SplashScreen';
 import DashBoard from './DashBoard';
 import Header from './Header';
+import SignIn from "./SignIn";
 
 class App extends React.Component{
     render(){
@@ -15,6 +16,7 @@ class App extends React.Component{
                 <Switch>
                 <Route path="/" component={SplashScreen} exact/>
                 <Route path="/dashboard" component={DashBoard} exact/>
+                <Route path="/signin" component={SignIn} exact/>
                 </Switch>
             </div> 
             </BrowserRouter>
