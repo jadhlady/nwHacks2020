@@ -1,13 +1,27 @@
-import React from 'react';
+import React from "react";
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import "./styles.css";
 
-import './App.css';
+import SplashScreen from './SplashScreen';
+import DashBoard from './DashBoard';
+import Header from './Header';
+import SignIn from "./SignIn";
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Hello World</h1>
-    </div>
-  );
+class App extends React.Component{
+    render(){
+        return (
+            <BrowserRouter>
+            <Header/>
+            <div className="ImmuApp">
+                <Switch>
+                <Route path="/" component={SplashScreen} exact/>
+                <Route path="/dashboard" component={DashBoard} exact/>
+                <Route path="/signin" component={SignIn} exact/>
+                </Switch>
+            </div> 
+            </BrowserRouter>
+        );
+    }
 }
 
 export default App;
